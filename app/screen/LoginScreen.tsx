@@ -9,8 +9,34 @@ import {
   Text,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
+import { authLogin } from "../services/AuthServices";
+import { authStateLogin } from "../state/AuthState";
+import IconIonio from "react-native-vector-icons/Ionicons";
 
 const LoginScreen = ({ navigation }) => {
+  const {
+    authInput,
+    handleAuthInput,
+    showPassword,
+    handleShowPassword,
+    setAuthInput,
+  } = authStateLogin();
+
+  const handlePress = async () => {
+    try {
+      const response = await authLogin(authInput);
+      console.log(response);
+      if (response.status == 200 && authInput.password.length > 0) {
+        navigation.navigate("TabsNavigation");
+        setAuthInput({
+          username: "",
+          password: "",
+        });
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <View style={styles.mainBody}>
       <ScrollView
@@ -51,6 +77,7 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.inputStyle}
                 placeholder="Username or email"
                 placeholderTextColor={"white"}
+                onChangeText={(text) => handleAuthInput("username", text)}
               />
             </View>
             <View style={styles.sectionStyle}>
@@ -58,7 +85,27 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.inputStyle}
                 placeholder="Password"
                 placeholderTextColor={"white"}
+                secureTextEntry={showPassword}
+                onChangeText={(text) => handleAuthInput("password", text)}
               />
+              <TouchableOpacity
+                onPress={() => handleShowPassword()}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  borderTopRightRadius: 10,
+                  borderBottomRightRadius: 10,
+                  padding: 8,
+                }}
+              >
+                {showPassword ? (
+                  <IconIonio name="eye-off" style={{ fontSize: 17 }} />
+                ) : (
+                  <IconIonio name="eye" style={{ fontSize: 17 }} />
+                )}
+              </TouchableOpacity>
             </View>
             <View
               style={{
@@ -70,7 +117,7 @@ const LoginScreen = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonLoginStyle}
-                  onPress={() => navigation.navigate("TabsNavigation")}
+                  onPress={() => handlePress()}
                 >
                   <Text style={{ fontWeight: "600" }}>Login</Text>
                 </TouchableOpacity>
@@ -132,16 +179,17 @@ const styles = StyleSheet.create({
     height: 40,
     marginTop: 20,
     width: 340,
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
   },
   inputStyle: {
     flex: 1,
     color: "white",
     paddingLeft: 20,
     paddingRight: 20,
-    borderWidth: 1,
     borderRadius: 10,
     width: "100%",
-    borderColor: "white",
   },
   buttonLoginStyle: {
     backgroundColor: "#fcfcfc",

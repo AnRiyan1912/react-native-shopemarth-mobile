@@ -8,9 +8,43 @@ import {
   View,
   Text,
 } from "react-native";
-import Icon from "react-native-vector-icons/FontAwesome5";
+import { authStateRegister } from "../state/AuthState";
+import { AuthModelRegister } from "../models/AuthModels";
+import { authRegisterCustomer } from "../services/AuthServices";
+import IconIonio from "react-native-vector-icons/Ionicons";
 
 export const RegisterScreen = ({ navigation }) => {
+  const {
+    errors,
+    handleAuthInput,
+    showErorMessage,
+    setShowErrorMessage,
+    authInput,
+    setAuthInput,
+    handleShowPassword,
+    showPassword,
+  } = authStateRegister();
+
+  const handleRegister = async (errors: AuthModelRegister) => {
+    const hashError = Object.values(errors).some;
+    (error) => error.length > 0;
+
+    if (hashError) {
+      setShowErrorMessage(true);
+    } else {
+      setShowErrorMessage(false);
+      setAuthInput({
+        customerName: "",
+        username: "",
+        password: "",
+        email: "",
+        mobilePhone: "",
+        address: "",
+      });
+    }
+    const response = await authRegisterCustomer(authInput);
+  };
+
   return (
     <View style={styles.mainBody}>
       <ScrollView
@@ -51,43 +85,103 @@ export const RegisterScreen = ({ navigation }) => {
                 style={styles.inputStyle}
                 placeholder="Username"
                 placeholderTextColor={"white"}
+                onChangeText={(text) => {
+                  handleAuthInput("username", text);
+                }}
+                value={authInput.username}
               />
             </View>
+            {showErorMessage && (
+              <Text style={styles.messageErrorInput}>{errors.username}</Text>
+            )}
             <View style={styles.sectionStyle}>
               <TextInput
                 style={styles.inputStyle}
                 placeholder="Email"
                 placeholderTextColor={"white"}
+                onChangeText={(text) => {
+                  handleAuthInput("email", text);
+                }}
+                value={authInput.email}
               />
             </View>
+            {showErorMessage && (
+              <Text style={styles.messageErrorInput}>{errors.email}</Text>
+            )}
             <View style={styles.sectionStyle}>
               <TextInput
                 style={styles.inputStyle}
                 placeholder="Password"
                 placeholderTextColor={"white"}
+                secureTextEntry={showPassword}
+                onChangeText={(text) => handleAuthInput("password", text)}
               />
+              <TouchableOpacity
+                onPress={() => handleShowPassword()}
+                style={{
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  backgroundColor: "white",
+                  borderTopRightRadius: 10,
+                  borderBottomRightRadius: 10,
+                  padding: 8,
+                }}
+              >
+                {showPassword ? (
+                  <IconIonio name="eye-off" style={{ fontSize: 17 }} />
+                ) : (
+                  <IconIonio name="eye" style={{ fontSize: 17 }} />
+                )}
+              </TouchableOpacity>
             </View>
+            {showErorMessage && (
+              <Text style={styles.messageErrorInput}>{errors.password}</Text>
+            )}
             <View style={styles.sectionStyle}>
               <TextInput
                 style={styles.inputStyle}
                 placeholder="Your Name"
                 placeholderTextColor={"white"}
+                onChangeText={(text) => {
+                  handleAuthInput("customerName", text);
+                }}
+                value={authInput.customerName}
               />
             </View>
+            {showErorMessage && (
+              <Text style={styles.messageErrorInput}>
+                {errors.customerName}
+              </Text>
+            )}
             <View style={styles.sectionStyle}>
               <TextInput
                 style={styles.inputStyle}
                 placeholder="Addrees"
                 placeholderTextColor={"white"}
+                onChangeText={(text) => {
+                  handleAuthInput("address", text);
+                }}
+                value={authInput.address}
               />
             </View>
+            {showErorMessage && (
+              <Text style={styles.messageErrorInput}>{errors.address}</Text>
+            )}
             <View style={styles.sectionStyle}>
               <TextInput
                 style={styles.inputStyle}
                 placeholder="Phone Number"
                 placeholderTextColor={"white"}
+                onChangeText={(text) => {
+                  handleAuthInput("mobilePhone", text);
+                }}
+                value={authInput.mobilePhone}
               />
             </View>
+            {showErorMessage && (
+              <Text style={styles.messageErrorInput}>{errors.mobilePhone}</Text>
+            )}
             <View
               style={{
                 flexDirection: "row",
@@ -98,7 +192,7 @@ export const RegisterScreen = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonLoginStyle}
-                  onPress={() => navigation.navigate("HomeCategoriesScreen")}
+                  onPress={() => handleRegister(errors)}
                 >
                   <Text style={{ fontWeight: "600" }}>Register</Text>
                 </TouchableOpacity>
@@ -142,17 +236,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     height: 40,
     marginTop: 20,
-    // margin: 10,
     width: 340,
+    borderColor: "white",
+    borderWidth: 1,
+    borderRadius: 10,
   },
   inputStyle: {
     flex: 1,
     color: "white",
     paddingLeft: 20,
     paddingRight: 20,
-    borderWidth: 1,
-    borderRadius: 10,
-    borderColor: "#dadae8",
     width: "100%",
   },
   buttonLoginStyle: {
@@ -179,5 +272,8 @@ const styles = StyleSheet.create({
     padding: 9,
     flexDirection: "row",
     justifyContent: "center",
+  },
+  messageErrorInput: {
+    color: "#c71a1a",
   },
 });
