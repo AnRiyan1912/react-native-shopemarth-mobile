@@ -6,10 +6,8 @@ import IconMaterialComonity from "react-native-vector-icons/MaterialCommunityIco
 import IconMaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { StyleSheet } from "react-native";
 import { Header } from "./Header";
-import { useNavigation } from "@react-navigation/native";
 
 export const HomeCategoriesScreen = ({ navigation }) => {
-  const nav = useNavigation();
   return (
     <View style={styles.mainBody}>
       <Header navigation={navigation} />

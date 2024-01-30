@@ -1,12 +1,17 @@
-import { useUser } from "@clerk/clerk-expo";
+import { useAuth, useUser } from "@clerk/clerk-expo";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import IconAwesome from "react-native-vector-icons/FontAwesome";
+import * as SecureStore from "expo-secure-store";
+import { useNavigation } from "@react-navigation/native";
 
-export const ProfileScreen = () => {
+export const ProfileScreen = ({ navigation }) => {
   const { isLoaded, isSignedIn, user } = useUser();
-  if (!isLoaded || !isSignedIn) {
-    return null;
-  }
+
+  const { signOut } = useAuth();
+  const handleLogout = async () => {
+    await SecureStore.deleteItemAsync("auth");
+    navigation.navigate("LoginScreen");
+  };
   return (
     <View style={styles.mainBody}>
       <View>
@@ -22,13 +27,18 @@ export const ProfileScreen = () => {
       </View>
       <View style={styles.sectionTextUpload}>
         <Text style={styles.textUploadImage}>
-          {user.firstName
+          {user?.firstName
             ? user.firstName + " " + user.lastName
             : "Upload image"}
         </Text>
       </View>
       <View>
-        <TouchableOpacity style={styles.buttonLogout}>
+        <TouchableOpacity
+          style={styles.buttonLogout}
+          onPress={() => {
+            handleLogout(), signOut();
+          }}
+        >
           <Text style={styles.textLogout}>Logout</Text>
         </TouchableOpacity>
       </View>

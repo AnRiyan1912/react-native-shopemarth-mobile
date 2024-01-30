@@ -1,15 +1,14 @@
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { ProfileScreen } from "../screen/ProfileScreen";
 import { HomeCategoriesScreen } from "../screen/HomeCategoriesScreen";
-import { TouchableOpacity } from "react-native";
 import { CartScreen } from "../screen/CartScreen";
 import { NotificationScreen } from "../screen/NotificationScreen";
-import { ProfileScreen } from "../screen/ProfileScreen";
-const Tab = createBottomTabNavigator();
 import Icon from "react-native-vector-icons/Ionicons";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
+const Tab = createBottomTabNavigator();
 export const TabsNavigation = () => {
   return (
-    <Tab.Navigator screenOptions={{ tabBarShowLabel: false }}>
+    <Tab.Navigator>
       <Tab.Screen
         name="HomeCategoriesScreen"
         component={HomeCategoriesScreen}
@@ -18,6 +17,7 @@ export const TabsNavigation = () => {
           tabBarIcon: ({ color, size }) => (
             <Icon name="home" size={25} color={color} />
           ),
+          tabBarLabel: "",
         }}
       />
       <Tab.Screen
@@ -28,6 +28,7 @@ export const TabsNavigation = () => {
           tabBarIcon: ({ color }) => (
             <Icon name="cart" size={25} color={color} />
           ),
+          tabBarLabel: "",
         }}
       />
       <Tab.Screen
@@ -38,6 +39,7 @@ export const TabsNavigation = () => {
           tabBarIcon: ({ color }) => (
             <Icon name="notifications" size={25} color={color} />
           ),
+          tabBarLabel: "",
         }}
       />
       <Tab.Screen
@@ -48,6 +50,7 @@ export const TabsNavigation = () => {
           tabBarIcon: ({ color }) => (
             <Icon name="person-circle" size={25} color={color} />
           ),
+          tabBarLabel: "",
         }}
       />
     </Tab.Navigator>

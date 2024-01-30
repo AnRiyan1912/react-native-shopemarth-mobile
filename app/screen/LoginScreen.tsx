@@ -14,14 +14,38 @@ import { authLogin } from "../services/AuthServices";
 import { authStateLogin } from "../state/AuthState";
 import IconIonio from "react-native-vector-icons/Ionicons";
 import Spinner from "react-native-loading-spinner-overlay";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useOAuth } from "@clerk/clerk-expo";
 import { useWarmUpBrowser } from "../hooks/useWarnUpBrowser";
 import * as WebBrowser from "expo-web-browser";
+import * as SecureStore from "expo-secure-store";
 
 WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = ({ navigation }) => {
   useWarmUpBrowser();
+
+  const [tokenCheck, setTokenCheck] = useState<string>("");
+  const getToken = async () => {
+    try {
+      const token = await SecureStore.getItemAsync("auth");
+
+      setTokenCheck(token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const saveToken = (key: string, token: string) => {
+    try {
+      SecureStore.setItem(key, token);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  tokenCheck ? navigation.navigate("Home") : navigation.navigate("LoginScreen");
+  useEffect(() => {
+    getToken();
+  }, []);
   const [loading, setLoading] = useState<boolean>(false);
   const {
     authInput,
@@ -37,7 +61,7 @@ const LoginScreen = ({ navigation }) => {
 
       setTimeout(async () => {
         const response = await authLogin(authInput);
-        console.log(response);
+
         if (response == undefined) {
           setLoading(false);
           ToastAndroid.showWithGravity(
@@ -47,6 +71,7 @@ const LoginScreen = ({ navigation }) => {
           );
         }
         if (response?.status == 200 && authInput.password.length > 0) {
+          saveToken("auth", response.data.data.token);
           navigation.navigate("Home");
           setAuthInput({
             username: "",
@@ -57,12 +82,14 @@ const LoginScreen = ({ navigation }) => {
             ToastAndroid.SHORT,
             ToastAndroid.CENTER
           );
+          setLoading(false);
         }
       }, 1200);
     } catch (err) {
       console.log(err);
     }
   };
+
   const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
   const onPress = React.useCallback(async () => {
     try {
