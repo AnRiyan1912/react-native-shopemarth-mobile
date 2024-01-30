@@ -1,9 +1,11 @@
 import { StyleSheet, Text, View } from "react-native";
+import { CarouselComponent } from "../component/Carousel";
 
 export const CartScreen = () => {
   return (
     <View style={styles.mainBody}>
       <Text>Init Keranjang</Text>
+      <CarouselComponent />
     </View>
   );
 };

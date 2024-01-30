@@ -7,13 +7,22 @@ import {
   TouchableOpacity,
   View,
   Text,
+  ToastAndroid,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome5";
 import { authLogin } from "../services/AuthServices";
 import { authStateLogin } from "../state/AuthState";
 import IconIonio from "react-native-vector-icons/Ionicons";
+import Spinner from "react-native-loading-spinner-overlay";
+import React, { useState } from "react";
+import { useOAuth } from "@clerk/clerk-expo";
+import { useWarmUpBrowser } from "../hooks/useWarnUpBrowser";
+import * as WebBrowser from "expo-web-browser";
 
+WebBrowser.maybeCompleteAuthSession();
 const LoginScreen = ({ navigation }) => {
+  useWarmUpBrowser();
+  const [loading, setLoading] = useState<boolean>(false);
   const {
     authInput,
     handleAuthInput,
@@ -22,21 +31,52 @@ const LoginScreen = ({ navigation }) => {
     setAuthInput,
   } = authStateLogin();
 
-  const handlePress = async () => {
+  const handlePressLogin = async () => {
     try {
-      const response = await authLogin(authInput);
-      console.log(response);
-      if (response.status == 200 && authInput.password.length > 0) {
-        navigation.navigate("TabsNavigation");
-        setAuthInput({
-          username: "",
-          password: "",
-        });
-      }
+      setLoading(true);
+
+      setTimeout(async () => {
+        const response = await authLogin(authInput);
+        console.log(response);
+        if (response == undefined) {
+          setLoading(false);
+          ToastAndroid.showWithGravity(
+            "Wrong username or password!",
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+          );
+        }
+        if (response?.status == 200 && authInput.password.length > 0) {
+          navigation.navigate("Home");
+          setAuthInput({
+            username: "",
+            password: "",
+          });
+          ToastAndroid.showWithGravity(
+            "Success login",
+            ToastAndroid.SHORT,
+            ToastAndroid.CENTER
+          );
+        }
+      }, 1200);
     } catch (err) {
       console.log(err);
     }
   };
+  const { startOAuthFlow } = useOAuth({ strategy: "oauth_google" });
+  const onPress = React.useCallback(async () => {
+    try {
+      const { createdSessionId, signIn, signUp, setActive } =
+        await startOAuthFlow();
+
+      if (createdSessionId) {
+        setActive({ session: createdSessionId });
+      }
+    } catch (err) {
+      console.error("OAuth error", err);
+    }
+  }, []);
+
   return (
     <View style={styles.mainBody}>
       <ScrollView
@@ -47,6 +87,12 @@ const LoginScreen = ({ navigation }) => {
           alignContent: "center",
         }}
       >
+        <Spinner
+          textContent="loading...."
+          visible={loading}
+          textStyle={{ color: "#ffffff" }}
+          animation="fade"
+        />
         <View>
           <KeyboardAvoidingView enabled>
             <View style={{ alignItems: "center" }}>
@@ -117,7 +163,7 @@ const LoginScreen = ({ navigation }) => {
               <View>
                 <TouchableOpacity
                   style={styles.buttonLoginStyle}
-                  onPress={() => handlePress()}
+                  onPress={() => handlePressLogin()}
                 >
                   <Text style={{ fontWeight: "600" }}>Login</Text>
                 </TouchableOpacity>
@@ -145,6 +191,7 @@ const LoginScreen = ({ navigation }) => {
                 style={styles.iconGoogle}
                 backgroundColor="#ffffff"
                 color="black"
+                onPress={onPress}
               >
                 <Text style={{ fontWeight: "700" }}>Continue with google</Text>
               </Icon.Button>

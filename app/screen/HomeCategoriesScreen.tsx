@@ -1,28 +1,18 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
+
 import IconAwesome from "react-native-vector-icons/FontAwesome";
 import IconAwesome5 from "react-native-vector-icons/FontAwesome5";
 import IconMaterialComonity from "react-native-vector-icons/MaterialCommunityIcons";
 import IconMaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { StyleSheet } from "react-native";
+import { Header } from "./Header";
+import { useNavigation } from "@react-navigation/native";
 
 export const HomeCategoriesScreen = ({ navigation }) => {
+  const nav = useNavigation();
   return (
     <View style={styles.mainBody}>
-      <View style={styles.sectionHeader}>
-        <TouchableOpacity
-          style={styles.buttonBack}
-          onPress={() => navigation.navigate("Auth")}
-        >
-          <Icon name="arrow-back" style={{ color: "white", fontSize: 17 }} />
-          <Text style={{ color: "white", fontSize: 17 }}>Back</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={styles.buttonBack}>
-          <Icon name="search" style={{ color: "white", fontSize: 17 }} />
-          <Text style={{ color: "white", fontSize: 17 }}>Search</Text>
-        </TouchableOpacity>
-      </View>
+      <Header navigation={navigation} />
       <View style={styles.containerCategory}>
         <View>
           <Text style={{ fontSize: 23, fontWeight: "800", color: "#ffffff" }}>
@@ -36,7 +26,12 @@ export const HomeCategoriesScreen = ({ navigation }) => {
           </TouchableOpacity>
         </View>
         <View>
-          <TouchableOpacity style={styles.sectionCategory}>
+          <TouchableOpacity
+            style={styles.sectionCategory}
+            onPress={() =>
+              navigation.navigate("Root", { screen: "ClothesScreen" })
+            }
+          >
             <IconAwesome5 name="tshirt" style={{ fontSize: 23 }} />
             <Text style={{ fontSize: 17 }}>Clothes</Text>
           </TouchableOpacity>
