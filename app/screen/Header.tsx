@@ -9,13 +9,16 @@ export const Header = ({ navigation }) => {
       <View style={styles.sectionHeader}>
         <TouchableOpacity
           style={styles.buttonBack}
-          onPress={() => navigation.navigate("Auth")}
+          onPress={() => nav.goBack()}
         >
           <Icon name="arrow-back" style={{ color: "white", fontSize: 17 }} />
           <Text style={{ color: "white", fontSize: 17 }}>Back</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.buttonBack}>
+        <TouchableOpacity
+          style={styles.buttonBack}
+          onPress={() => navigation.navigate("AllCategoryDataScreen")}
+        >
           <Icon name="search" style={{ color: "white", fontSize: 17 }} />
           <Text style={{ color: "white", fontSize: 17 }}>Search</Text>
         </TouchableOpacity>

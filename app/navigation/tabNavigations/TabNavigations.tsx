@@ -1,9 +1,9 @@
-import { ProfileScreen } from "../screen/ProfileScreen";
-import { HomeCategoriesScreen } from "../screen/HomeCategoriesScreen";
-import { CartScreen } from "../screen/CartScreen";
-import { NotificationScreen } from "../screen/NotificationScreen";
+import { ProfileScreen } from "../../screen/ProfileScreen";
+import { CartScreen } from "../../screen/CartScreen";
+import { NotificationScreen } from "../../screen/NotificationScreen";
 import Icon from "react-native-vector-icons/Ionicons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { HomeStackScreen } from "../homeStackNavigator/HomeStackNavigator";
 
 const Tab = createBottomTabNavigator();
 export const TabsNavigation = () => {
@@ -11,7 +11,7 @@ export const TabsNavigation = () => {
     <Tab.Navigator>
       <Tab.Screen
         name="HomeCategoriesScreen"
-        component={HomeCategoriesScreen}
+        component={HomeStackScreen}
         options={{
           headerShown: false,
           tabBarIcon: ({ color, size }) => (

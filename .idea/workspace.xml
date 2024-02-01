@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="af299c56-7352-46c2-9e48-e7a4421d0baa" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/eas.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/api/axios.ts" beforeDir="false" afterPath="$PROJECT_DIR$/app/api/axios.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/constants/ApiUrl.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/constants/ApiUrl.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/models/AuthModels.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/models/AuthModels.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/redux/slices/ProductSlice.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/redux/states/ProductState.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/redux/store/Store.tsx" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screen/HomeCategoriesScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screen/HomeCategoriesScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screen/LoginScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screen/LoginScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/screen/ProfileScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/screen/ProfileScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/services/AuthServices.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/services/AuthServices.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/stackNavigation/StackNavogation.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigation/stackNavigation/StackNavogation.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/state/AuthState.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/state/AuthState.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/tabNavigations/TabNavigations.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/app/navigation/tabNavigations/TabNavigations.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/babel.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "associatedIndex": 4
+}]]></component>
+  <component name="ProjectId" id="2biueRysHtq7PHFYGGDnCtdCUoD" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "/home/user/Documents/shopeymart-main",
+    "nodejs_package_manager_path": "npm",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="af299c56-7352-46c2-9e48-e7a4421d0baa" name="Changes" comment="" />
+      <created>1706710316045</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1706710316045</updated>
+      <workItem from="1706710317178" duration="503000" />
+    </task>
+    <servers />
+  </component>
+</project>

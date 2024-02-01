@@ -8,7 +8,7 @@ export const CarouselComponent = () => {
     await getSlider().then((response) => console.log(response));
   };
 
-  console.log(sliders);
+  // console.log(sliders);
   useEffect(() => {
     getSliders();
   }, []);

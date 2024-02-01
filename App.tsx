@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { ClerkProvider, SignedIn, SignedOut } from "@clerk/clerk-expo";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import * as SecureStore from "expo-secure-store";
 import { Provider } from "react-redux";
-import { store } from "./app/redux/store/Store";
 import { constans } from "./app/utils/Constants";
-import { TabsNavigation } from "./app/tabNavigations/TabNavigations";
-import { AuthStack } from "./app/stackNavigation/StackNavogation";
+import { TabsNavigation } from "./app/navigation/tabNavigations/TabNavigations";
+import { AuthStack } from "./app/navigation/stackNavigation/StackNavigation";
+import { store } from "./app/redux/store/store";
 
 const tokenCache = {
   getToken(key) {
@@ -28,11 +27,11 @@ const tokenCache = {
 
 export default function App() {
   return (
-    <Provider store={store}>
-      <ClerkProvider
-        publishableKey={constans.publishKeyClerk}
-        tokenCache={tokenCache}
-      >
+    <ClerkProvider
+      publishableKey={constans.publishKeyClerk}
+      tokenCache={tokenCache}
+    >
+      <Provider store={store}>
         <NavigationContainer>
           <SignedIn>
             <TabsNavigation />
@@ -44,7 +43,7 @@ export default function App() {
             <AuthStack />
           </SignedOut>
         </NavigationContainer>
-      </ClerkProvider>
-    </Provider>
+      </Provider>
+    </ClerkProvider>
   );
 }

@@ -42,7 +42,7 @@ const LoginScreen = ({ navigation }) => {
       console.log(err);
     }
   };
-  tokenCheck ? navigation.navigate("Home") : navigation.navigate("LoginScreen");
+  // tokenCheck ? navigation.navigate("Home") : navigation.navigate("LoginScreen");
   useEffect(() => {
     getToken();
   }, []);
@@ -70,6 +70,7 @@ const LoginScreen = ({ navigation }) => {
             ToastAndroid.CENTER
           );
         }
+
         if (response?.status == 200 && authInput.password.length > 0) {
           saveToken("auth", response.data.data.token);
           navigation.navigate("Home");
@@ -188,12 +189,24 @@ const LoginScreen = ({ navigation }) => {
               }}
             >
               <View>
-                <TouchableOpacity
-                  style={styles.buttonLoginStyle}
-                  onPress={() => handlePressLogin()}
-                >
-                  <Text style={{ fontWeight: "600" }}>Login</Text>
-                </TouchableOpacity>
+                {authInput.username.length < 0 &&
+                authInput.password.length < 0 ? (
+                  <TouchableOpacity
+                    style={styles.buttonLoginStyle}
+                    onPress={() => handlePressLogin()}
+                    disabled
+                  >
+                    <Text style={{ fontWeight: "600" }}>Login</Text>
+                  </TouchableOpacity>
+                ) : (
+                  <TouchableOpacity
+                    style={styles.buttonLoginStyle}
+                    onPress={() => handlePressLogin()}
+                  >
+                    <Text style={{ fontWeight: "600" }}>Login</Text>
+                  </TouchableOpacity>
+                )}
+
                 <View style={{ flexDirection: "row", marginTop: 10 }}>
                   <Text>Dont'n have account?</Text>
                   <TouchableOpacity

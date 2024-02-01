@@ -2,36 +2,51 @@ import { useAuth, useUser } from "@clerk/clerk-expo";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 import IconAwesome from "react-native-vector-icons/FontAwesome";
 import * as SecureStore from "expo-secure-store";
-import { useNavigation } from "@react-navigation/native";
+import { RootStore } from "../redux/store/store";
+import { getInfoCustomerLogin } from "../utils/getInfoCustomerLogin";
+import { useSelector } from "react-redux";
+const profileImage = require("../../assets/avatar_face.png");
 
 export const ProfileScreen = ({ navigation }) => {
-  const { isLoaded, isSignedIn, user } = useUser();
+  getInfoCustomerLogin();
 
+  const { isLoaded, isSignedIn, user } = useUser();
+  const customer = useSelector((state: RootStore) => state.customer);
   const { signOut } = useAuth();
+
   const handleLogout = async () => {
     await SecureStore.deleteItemAsync("auth");
     navigation.navigate("LoginScreen");
   };
+
   return (
     <View style={styles.mainBody}>
+      <Text style={styles.textProfile}>Profile</Text>
       <View>
-        <View>
-          <Image
-            source={require("../../assets/icon.png")}
-            style={styles.profileImage}
-          />
+        <View style={styles.sectionImage}>
+          <Image source={profileImage} style={styles.profileImage} />
         </View>
         <View style={styles.sectionIconUploadPhoto}>
           <IconAwesome name="pencil" style={styles.iconUploadPhoto} />
         </View>
       </View>
+
       <View style={styles.sectionTextUpload}>
         <Text style={styles.textUploadImage}>
-          {user?.firstName
-            ? user.firstName + " " + user.lastName
-            : "Upload image"}
+          {profileImage ? "" : "Upload image"}
         </Text>
       </View>
+      <View>
+        <Text style={styles.textProfileName}>
+          Name:
+          {user?.firstName
+            ? " " + user.firstName + " " + user.lastName
+            : "Upload image" || customer.customerName
+            ? " " + customer.customerName
+            : ""}
+        </Text>
+      </View>
+
       <View>
         <TouchableOpacity
           style={styles.buttonLogout}
@@ -80,12 +95,33 @@ const styles = StyleSheet.create({
   },
   textLogout: {
     color: "black",
+    fontWeight: "600",
   },
   buttonLogout: {
+    marginTop: 100,
     backgroundColor: "white",
     paddingLeft: 30,
     paddingRight: 30,
     paddingBottom: 10,
     paddingTop: 10,
+    borderRadius: 6,
+  },
+  sectionImage: {
+    backgroundColor: "white",
+    width: 100,
+    height: 100,
+    padding: 5,
+    borderRadius: 10,
+  },
+  textProfileName: {
+    color: "white",
+    fontSize: 20,
+  },
+  textProfile: {
+    color: "white",
+    fontSize: 26,
+    marginBottom: 20,
+    borderBottomColor: "white",
+    borderBottomWidth: 1,
   },
 });

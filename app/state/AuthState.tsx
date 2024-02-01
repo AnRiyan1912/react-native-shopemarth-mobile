@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { AuthModelLogin, AuthModelRegister } from "../models/AuthModels";
+import {
+  Admin,
+  AuthModelLogin,
+  AuthModelRegister,
+  Customer,
+} from "../models/AuthModels";
 import { authValidationRegister } from "../helper/utils/AuthValidation";
 
 export const authStateLogin = () => {
@@ -8,15 +13,12 @@ export const authStateLogin = () => {
     username: "",
     password: "",
   });
-
   const handleShowPassword = () => {
     setShowPassword(!showPassword);
   };
-
   const handleAuthInput = (field: string, value: string) => {
     setAuthInput((prevAuth) => ({ ...prevAuth, [field]: value }));
   };
-
   return {
     showPassword,
     authInput,
@@ -58,3 +60,17 @@ export const authStateRegister = () => {
     handleShowPassword,
   };
 };
+
+export const authStateUser = () => {
+  const [user, setUser] = useState<Customer | Admin>();
+
+  const handleSetUser = (user: Customer | Admin) => {
+    setUser(user);
+  };
+
+  return {
+    user,
+    handleSetUser,
+  };
+};
+

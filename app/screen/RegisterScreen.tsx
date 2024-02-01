@@ -7,10 +7,11 @@ import {
   TouchableOpacity,
   View,
   Text,
+  ToastAndroid,
 } from "react-native";
 import { authStateRegister } from "../state/AuthState";
 import { AuthModelRegister } from "../models/AuthModels";
-import { authRegisterCustomer } from "../services/AuthServices";
+import { authLogin, authRegisterCustomer } from "../services/AuthServices";
 import IconIonio from "react-native-vector-icons/Ionicons";
 
 export const RegisterScreen = ({ navigation }) => {
@@ -42,7 +43,23 @@ export const RegisterScreen = ({ navigation }) => {
         address: "",
       });
     }
+
     const response = await authRegisterCustomer(authInput);
+    console.log(response);
+    if (response?.status == 201) {
+      navigation.navigate("SuccessRegisterScreen");
+      ToastAndroid.showWithGravity(
+        "Success register",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    } else if (response === undefined) {
+      ToastAndroid.showWithGravity(
+        "Failed register",
+        ToastAndroid.SHORT,
+        ToastAndroid.CENTER
+      );
+    }
   };
 
   return (

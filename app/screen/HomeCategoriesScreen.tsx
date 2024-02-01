@@ -1,13 +1,16 @@
 import { View, Text, TouchableOpacity } from "react-native";
-
 import IconAwesome from "react-native-vector-icons/FontAwesome";
 import IconAwesome5 from "react-native-vector-icons/FontAwesome5";
 import IconMaterialComonity from "react-native-vector-icons/MaterialCommunityIcons";
 import IconMaterialIcons from "react-native-vector-icons/MaterialIcons";
 import { StyleSheet } from "react-native";
 import { Header } from "./Header";
+import * as SecureStorage from "expo-secure-store";
+import categories from "../dataDumy/category.json";
 
 export const HomeCategoriesScreen = ({ navigation }) => {
+  const token = SecureStorage.getItem("auth");
+  console.log(token);
   return (
     <View style={styles.mainBody}>
       <Header navigation={navigation} />
@@ -17,44 +20,47 @@ export const HomeCategoriesScreen = ({ navigation }) => {
             Categories
           </Text>
         </View>
-        <View>
-          <TouchableOpacity style={styles.sectionCategory}>
-            <IconAwesome name="cart-arrow-down" style={{ fontSize: 25 }} />
-            <Text style={{ fontSize: 17 }}>New Arrivals</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
+        {categories.categories.map((category) => (
           <TouchableOpacity
+            key={category.id}
             style={styles.sectionCategory}
             onPress={() =>
-              navigation.navigate("Root", { screen: "ClothesScreen" })
+              category.name == "All categories"
+                ? navigation.navigate("AllCategoryDataScreen")
+                : ""
             }
           >
-            <IconAwesome5 name="tshirt" style={{ fontSize: 23 }} />
-            <Text style={{ fontSize: 17 }}>Clothes</Text>
+            {category.name === "Clothes" && (
+              <IconAwesome name="cart-arrow-down" style={{ fontSize: 25 }} />
+            )}
+            {category.name === "Bags" && (
+              <IconAwesome5 name="shopping-bag" style={{ fontSize: 25 }} />
+            )}
+
+            {category.name === "T-shirt" && (
+              <IconAwesome5 name="tshirt" style={{ fontSize: 23 }} />
+            )}
+            {category.name === "Shoes" && (
+              <IconMaterialComonity
+                name="shoe-sneaker"
+                style={{ fontSize: 25 }}
+              />
+            )}
+            {category.name === "Electronics" && (
+              <IconMaterialIcons
+                name="electric-bolt"
+                style={{ fontSize: 25 }}
+              />
+            )}
+            {category.name === "All categories" && (
+              <IconMaterialIcons
+                name="density-small"
+                style={{ fontSize: 25 }}
+              />
+            )}
+            <Text style={{ fontSize: 17 }}>{category.name}</Text>
           </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity style={styles.sectionCategory}>
-            <IconAwesome5 name="shopping-bag" style={{ fontSize: 25 }} />
-            <Text style={{ fontSize: 17 }}>Bags</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity style={styles.sectionCategory}>
-            <IconMaterialComonity
-              name="shoe-sneaker"
-              style={{ fontSize: 25 }}
-            />
-            <Text style={{ fontSize: 17 }}>Shoes</Text>
-          </TouchableOpacity>
-        </View>
-        <View>
-          <TouchableOpacity style={styles.sectionCategory}>
-            <IconMaterialIcons name="electric-bolt" style={{ fontSize: 25 }} />
-            <Text style={{ fontSize: 17 }}>Electronics</Text>
-          </TouchableOpacity>
-        </View>
+        ))}
       </View>
     </View>
   );

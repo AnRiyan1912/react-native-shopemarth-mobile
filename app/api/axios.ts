@@ -2,7 +2,10 @@ import axios from "axios";
 import * as SecureStorage from "expo-secure-store";
 
 export const api = axios.create({
-  baseURL: "http://10.0.2.2:1919",
+  baseURL: "http://10.0.2.2:1919/",
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
 
 api.interceptors.request.use((config) => {
@@ -16,3 +19,4 @@ api.interceptors.request.use((config) => {
     return Promise.reject(err);
   };
 });
+  
